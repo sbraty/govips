@@ -1284,7 +1284,7 @@ func (r *ImageRef) OptimizeICCProfile() error {
 		r.optimizedIccProfile = SGrayV2MicroICCProfilePath
 	}
 
-	embedded := r.HasICCProfile() && (inputProfile == "")
+	embedded := r.HasICCProfile()
 
 	depth := 16
 	if r.BandFormat() == BandFormatUchar || r.BandFormat() == BandFormatChar || r.BandFormat() == BandFormatNotSet {
