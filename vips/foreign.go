@@ -46,6 +46,17 @@ const (
 	ImageTypeJP2K    ImageType = C.JP2K
 )
 
+type FailOnError int
+
+// Interpretation enum
+const (
+	VipsFailOnNone      FailOnError = C.VIPS_FAIL_ON_NONE
+	VipsFailOnTruncated FailOnError = C.VIPS_FAIL_ON_TRUNCATED
+	VipsFailOnError     FailOnError = C.VIPS_FAIL_ON_ERROR
+	VipsFailOnWarning   FailOnError = C.VIPS_FAIL_ON_WARNING
+	VipsFailOnLast      FailOnError = C.VIPS_FAIL_ON_LAST
+)
+
 var imageTypeExtensionMap = map[ImageType]string{
 	ImageTypeGIF:    ".gif",
 	ImageTypeJPEG:   ".jpeg",
@@ -304,7 +315,7 @@ func createImportParams(format ImageType, params *ImportParams) C.LoadParams {
 	p := C.create_load_params(C.ImageType(format))
 
 	maybeSetBoolParam(params.AutoRotate, &p.autorotate)
-	maybeSetBoolParam(params.FailOnError, &p.fail)
+	maybeSetIntParam(params.FailOn, &p.fail_on)
 	maybeSetIntParam(params.Page, &p.page)
 	maybeSetIntParam(params.NumPages, &p.n)
 	maybeSetIntParam(params.JpegShrinkFactor, &p.jpegShrink)

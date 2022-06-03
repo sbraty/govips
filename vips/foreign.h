@@ -58,7 +58,7 @@ typedef struct LoadParams {
   VipsImage *outputImage;
 
   Param autorotate;
-  Param fail;
+  Param fail_on;
   Param page;
   Param n;
   Param dpi;
