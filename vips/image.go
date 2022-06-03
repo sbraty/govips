@@ -98,11 +98,11 @@ func (p *Float64Parameter) Get() float64 {
 // ImportParams are options for loading an image. Some are type-specific.
 // For default loading, use NewImportParams() or specify nil
 type ImportParams struct {
-	AutoRotate  BoolParameter
-	FailOnError BoolParameter
-	Page        IntParameter
-	NumPages    IntParameter
-	Density     IntParameter
+	AutoRotate BoolParameter
+	FailOn     IntParameter
+	Page       IntParameter
+	NumPages   IntParameter
+	Density    IntParameter
 
 	JpegShrinkFactor IntParameter
 	HeifThumbnail    BoolParameter
@@ -112,7 +112,7 @@ type ImportParams struct {
 // NewImportParams creates default ImportParams
 func NewImportParams() *ImportParams {
 	p := &ImportParams{}
-	p.FailOnError.Set(true)
+	p.FailOn.Set(int(VipsFailOnTruncated))
 	return p
 }
 
@@ -128,8 +128,8 @@ func (i *ImportParams) OptionString() string {
 	if v := i.Density; v.IsSet() {
 		values = append(values, "dpi="+strconv.Itoa(v.Get()))
 	}
-	if v := i.FailOnError; v.IsSet() {
-		values = append(values, "fail="+boolToStr(v.Get()))
+	if v := i.FailOn; v.IsSet() {
+		values = append(values, "fail="+strconv.Itoa(v.Get()))
 	}
 	if v := i.JpegShrinkFactor; v.IsSet() {
 		values = append(values, "shrink="+strconv.Itoa(v.Get()))
